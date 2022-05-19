@@ -1,4 +1,4 @@
-import { FastifyServerOptions } from "fastify"
+import { FastifyInstance, FastifyServerOptions } from "fastify"
 import App from "./src/app"
 import { config, dbConfig } from "./src/config"
 
@@ -13,6 +13,11 @@ const options: FastifyServerOptions = {
 				: false
 	}
 }
-const app = App(options)
+
+// Application
+const app: FastifyInstance = App(options)
+// config database
 dbConfig(app)
-app.listen(config.port)
+// serve
+const PORT: string | number = config.port
+app.listen(PORT)

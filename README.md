@@ -33,7 +33,7 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
 ### Structure
 #### Routes-Handlers-Servicess-Structure
 ```
-📦nodejs-app-structure-init-main
+📦nodejs-app-structure-init
  ┣ 📂src
  ┃ ┣ 📂config
  ┃ ┃ ┣ 📂swagger
@@ -42,38 +42,44 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
  ┃ ┃ ┣ 📜config.ts
  ┃ ┃ ┣ 📜database.config.ts
  ┃ ┃ ┗ 📜index.ts
- ┃ ┣ 📂handlers
- ┃ ┃ ┣ 📜auth.handler.ts
- ┃ ┃ ┣ 📜index.ts
- ┃ ┃ ┗ 📜users.handler.ts
  ┃ ┣ 📂errors
  ┃ ┃ ┣ 📜auth.error.ts
  ┃ ┃ ┗ 📜index.ts
+ ┃ ┣ 📂handlers
+ ┃ ┃ ┣ 📂__tests__
+ ┃ ┃ ┣ 📜auth.handler.ts
+ ┃ ┃ ┣ 📜index.ts
+ ┃ ┃ ┗ 📜users.handler.ts
+ ┃ ┣ 📂helpers
+ ┃ ┣ 📂hooks
+ ┃ ┃ ┣ 📂__tests__
+ ┃ ┃ ┣ 📜auth.hook.ts
+ ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂interfaces
  ┃ ┃ ┗ 📂types
- ┃ ┃ ┃ ┣ 📂handlerss
- ┃ ┃ ┃ ┃ ┗ 📜auth.types.handlers.ts
+ ┃ ┃ ┃ ┣ 📂handlers
+ ┃ ┃ ┃ ┃ ┗ 📜auth.types.handler.ts
  ┃ ┃ ┃ ┣ 📂hooks
  ┃ ┃ ┃ ┃ ┗ 📜auth.types.hook.ts
  ┃ ┃ ┃ ┗ 📂models
  ┃ ┃ ┃ ┃ ┗ 📜Users.types.model.ts
- ┃ ┣ 📂hooks
- ┃ ┃ ┣ 📜auth.hook.ts
- ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂models
  ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┗ 📜users.model.ts
+ ┃ ┣ 📂public
  ┃ ┣ 📂routes
  ┃ ┃ ┣ 📜auth.route.ts
  ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┗ 📜users.route.ts
  ┃ ┣ 📂services
+ ┃ ┃ ┣ 📂__tests__
  ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┗ 📜users.service.ts
  ┃ ┣ 📂utils
  ┃ ┃ ┗ 📜custom-error.ts
  ┃ ┣ 📜app.spec.ts
  ┃ ┗ 📜app.ts
+ ┣ 📜.env
  ┣ 📜.eslintrc.ts
  ┣ 📜.gitignore
  ┣ 📜.prettierrc.ts
