@@ -1,0 +1,5 @@
+PORT=
+MONGO_URI="mongodb+srv://[username]:[password]@[yourcluster].ndmhk.mongodb.net/[yourDatabase]?retryWrites=true&w=majority"
+JWT_SECRET=YourJWTSecret
+NODE_ENV=development
+
