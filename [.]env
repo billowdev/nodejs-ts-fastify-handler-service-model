@@ -1,6 +1,11 @@
-PORT=
+PORT=5000
 MONGO_URI="mongodb+srv://[username]:[password]@[yourcluster].ndmhk.mongodb.net/[yourDatabase]?retryWrites=true&w=majority"
 JWT_SECRET=YourJWTSecret
 NODE_ENV=development
-CLIENT_URL=
+CLIENT_URL=localhost
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_USERNAME=default
+REDIS_PASSWORD=REDISPASSWORD
+REDIS_DATABASE=0
 
