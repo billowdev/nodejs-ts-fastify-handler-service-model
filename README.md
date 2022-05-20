@@ -34,7 +34,7 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
 #### Routes-Handlers-Servicess-Structure
 ```
 📦nodejs-app-structure-init
- ┣ 📂src
+┣ 📂src
  ┃ ┣ 📂config
  ┃ ┃ ┣ 📂swagger
  ┃ ┃ ┃ ┣ 📜index.ts
@@ -67,6 +67,9 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
  ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┗ 📜users.model.ts
  ┃ ┣ 📂public
+ ┃ ┣ 📂redis
+ ┃ ┃ ┣ 📜index.ts
+ ┃ ┃ ┗ 📜redisClient.ts
  ┃ ┣ 📂routes
  ┃ ┃ ┣ 📜auth.route.ts
  ┃ ┃ ┣ 📜index.ts
@@ -76,7 +79,8 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
  ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┗ 📜users.service.ts
  ┃ ┣ 📂utils
- ┃ ┃ ┗ 📜custom-error.ts
+ ┃ ┃ ┣ 📜custom-error.ts
+ ┃ ┃ ┗ 📜logger.ts
  ┃ ┣ 📜app.spec.ts
  ┃ ┗ 📜app.ts
  ┣ 📜.env
@@ -99,6 +103,8 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
 * [MongoDB](https://www.mongodb.com/)
 * [Fastify](https://www.fastify.io/)
 * [Jest](https://jestjs.io/)
+* [Swagger](https://swagger.io/)
+* [redis](https://redis.io/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
