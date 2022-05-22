@@ -27,7 +27,7 @@
 ## About The Project
 <br />
 <!-- [![Product Name Screen Shot][product-screenshot]]() -->
-App starter REST API With Node.js Fastify Sequelize Postgrest - Typescript
+App starter rest-api with node.js fastify sequelize postgresql redis-cache - typescript
 </p>
 <p align="right">(<a href="#top">back to top</a>)</p>
 
