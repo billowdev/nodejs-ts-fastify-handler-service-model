@@ -1,1 +1,1 @@
-export const Swagger = require("./swagger.option");
+export const swaggerOption = require("./swagger.option");

@@ -1,12 +1,13 @@
 import bcrypt from "bcrypt";
 import { sign } from "jsonwebtoken";
-import { UserSchema } from "../interfaces/types/models/Users.types.model";
-import Users, { UserSchemaWithDocument } from "../models/users.model";
+import { IUserAttributes } from "../interfaces/types/models/user.model.types";
 import customError from "../utils/custom-error";
 import { authErrors } from "../errors";
 import config from "../config/config";
-import { AuthLoginBodyResponse } from "../interfaces/types/handlers/auth.types.handler";
-import { getChache, setCache } from "../redis"
+import { IAuthLoginBodyResponse } from "../interfaces/types/handlers/auth.handler.types";
+import { getChache, setCache } from "../redis";
+import db from "../models";
+import logger from "../utils/logger";
 
 const passwordHashing = (password: string): string => {
   const salt = bcrypt.genSaltSync(10);
@@ -24,7 +25,7 @@ const comparePassword = (password: string, existsPassword: string): boolean => {
 
 const createToken = (userId: string): string => {
   const token = sign({}, config.webtoken as string, {
-    expiresIn: 60 * 5,
+    expiresIn: 3600 * 30,
     audience: String(userId),
   });
   return token;
@@ -32,37 +33,36 @@ const createToken = (userId: string): string => {
 
 const mapUserResponseObject = (
   userId: string,
-  user: UserSchemaWithDocument,
+  user: IUserAttributes,
   accessToken?: string
-): AuthLoginBodyResponse => {
-  const response: AuthLoginBodyResponse = {
+): IAuthLoginBodyResponse => {
+  const response: IAuthLoginBodyResponse = {
     id: userId,
     email: user.email,
     name: user.name || "",
     surname: user.surname || "",
+    phone: user.phone || "",
     accessToken,
   };
   return response;
 };
 
 export const createUser = async (
-  doc: UserSchema
-): Promise<UserSchemaWithDocument> => {
-  doc.password = passwordHashing(doc.password);
-  const user = new Users(doc);
-  return user.save();
+  data: IUserAttributes
+): Promise<IUserAttributes> => {
+  data.password = passwordHashing(data.password);
+  const user: IUserAttributes = await db.User.create(data);
+  return user;
 };
 
 export const userLogin = async (
   email: string,
   password: string
-): Promise<AuthLoginBodyResponse> => {
-  const user = await Users.findOne({
-    email,
-  })
-    .then((resp) => resp)
-    .catch((err) => err);
-  if (!user) {
+): Promise<IAuthLoginBodyResponse> => {
+  const user = await db.User.findOne({
+    where: { email },
+  });
+  if (user == null) {
     customError({
       ...authErrors.AuthInvalidEmail,
       data: {
@@ -71,10 +71,10 @@ export const userLogin = async (
     });
   }
   comparePassword(password, user.password);
-  const userId: string = user.id;
-  const accessToken = createToken(userId);
-  const response: AuthLoginBodyResponse = mapUserResponseObject(
-    userId,
+  const UserId: string = user.id;
+  const accessToken = createToken(UserId);
+  const response: IAuthLoginBodyResponse = mapUserResponseObject(
+    UserId,
     user,
     accessToken
   );
@@ -82,20 +82,19 @@ export const userLogin = async (
 };
 
 export const getUserById = async (
-  userId: string
-): Promise<AuthLoginBodyResponse> => {
-  const redisCacheKey: string = 'services:getUserById'
+  UserId: string
+): Promise<IAuthLoginBodyResponse> => {
+  const redisCacheKey: string = "services:getUserById";
   const userCache: any = await getChache(redisCacheKey);
   if (userCache) {
-    return userCache
+    return userCache;
   }
-
-  const user = await Users.findById(userId!);
-  if (!user) {
+  const user = await db.User.findOne({ where: { id: UserId } });
+  if (user == null) {
     return customError(authErrors.AuthJWTError);
   }
-  const response: AuthLoginBodyResponse = mapUserResponseObject(userId, user);
-  setCache(redisCacheKey, response)
+  const response: IAuthLoginBodyResponse = mapUserResponseObject(UserId, user);
+  setCache(redisCacheKey, response);
   return response;
 };
 

@@ -28,17 +28,10 @@ export const AuthRegisterFailure: CustomErrorParams = {
   statusCode: 401,
 };
 
-export const AuthRegisterFailureDuplicateValue: CustomErrorParams = {
-  message: "Register Failure Duplicate Value",
-  code: "AUTH006",
-  statusCode: 401,
-};
-
 export default {
   AuthInvalidEmail,
   AuthInvalidPassword,
   AuthMissingHeaders,
   AuthJWTError,
   AuthRegisterFailure,
-  AuthRegisterFailureDuplicateValue,
 };

@@ -1,33 +1,57 @@
-import { Schema, Document, model } from "mongoose";
-import { UserSchema } from "../interfaces/types/models/Users.types.model";
+"use strict";
 
-const collection = "Users";
+import { Model, UUIDV4 } from "sequelize";
+import { IUserAttributes } from "../interfaces/types/models/user.model.types";
 
-export interface UserSchemaWithDocument extends UserSchema, Document {}
-
-const usersSchema = new Schema<UserSchemaWithDocument>(
-  {
-    email: {
-      type: "string",
-      unique: true,
-      required: true,
-    },
-    password: {
-      type: "string",
-      required: true,
-    },
-    name: {
-      type: "string",
-    },
-    surname: {
-      type: "string",
-    },
-  },
-  {
-    collection,
-    versionKey: false,
-    timestamps: true, // createdAt, updatedAt
+module.exports = (sequelize: any, DataTypes: any) => {
+  class User extends Model<IUserAttributes> implements IUserAttributes {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    id!: string;
+    name!: string;
+    surname!: string;
+    email!: string;
+    password!: string;
+    phone!: string;
+    static associate(models: any) {
+      // define association here
+      User.hasMany(models.Article);
+    }
   }
-);
-
-export default model(collection, usersSchema);
+  User.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
+        allowNull: false,
+        primaryKey: true,
+      },
+      email: {
+        type: DataTypes.STRING(150),
+        unique: true,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING(100),
+      },
+      surname: {
+        type: DataTypes.STRING(100),
+      },
+      phone: {
+        type: DataTypes.STRING(10),
+      },
+    },
+    {
+      sequelize,
+      modelName: "User",
+    }
+  );
+  return User;
+};
