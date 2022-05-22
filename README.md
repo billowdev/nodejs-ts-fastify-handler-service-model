@@ -27,7 +27,7 @@
 ## About The Project
 <br />
 <!-- [![Product Name Screen Shot][product-screenshot]]() -->
-App starter REST API With Node.js Fastify MongoDB - Typescript
+App starter REST API With Node.js Fastify Sequelize Postgrest - Typescript
 </p>
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -110,7 +110,7 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
 
 * [NodeJs](https://nodejs.org/)
 * [Sequelize](https://sequelize.org/)
-* [Posgres](https://www.postgresql.org/)
+* [Postgres](https://www.postgresql.org/)
 * [Fastify](https://www.fastify.io/)
 * [Jest](https://jestjs.io/)
 * [Swagger](https://swagger.io/)
