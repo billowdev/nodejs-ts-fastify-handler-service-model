@@ -1,7 +1,7 @@
 {
   "name": "nodejs-app-structure-init",
   "version": "1.0.0",
-  "description": "app starter rest api with fastify mongodb",
+  "description": "app starter rest api with node-fastify-sequelize-postgresql-redis",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.ts",

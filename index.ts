@@ -6,7 +6,7 @@ import db from "./src/models"
 const options: FastifyServerOptions = {
 	logger: {
 		prettyPrint:
-			config.env === 'production'
+			config.env === 'development'
 				? {
 					translateTime: 'HH:MM:ss Z',
 					ignore: 'pid,hostname'
