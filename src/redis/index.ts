@@ -28,3 +28,17 @@ export const setCache = async (
       });
   });
 };
+export const delCache = async (
+  key: string = "",
+): Promise<unknown> => {
+  return new Promise((resolve, reject) => {
+    redisClient
+      .del(key)
+      .then(() => {
+        resolve(true);
+      })
+      .catch((error: Error) => {
+        reject(error);
+      });
+  });
+};
