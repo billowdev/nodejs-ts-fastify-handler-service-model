@@ -1,5 +1,6 @@
 <h3 align="center">nodejs-app-structure-init</h3>
-
+<h4 align="center">REST API</h4>
+<br />
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -34,7 +35,7 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
 #### Routes-Handlers-Servicess-Structure
 ```
 📦nodejs-app-structure-init
-┣ 📂src
+ ┣ 📂src
  ┃ ┣ 📂config
  ┃ ┃ ┣ 📂swagger
  ┃ ┃ ┃ ┣ 📜index.ts
@@ -43,41 +44,49 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
  ┃ ┃ ┣ 📜database.config.ts
  ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂errors
- ┃ ┃ ┣ 📜auth.error.ts
+ ┃ ┃ ┣ 📜article.errors.ts
+ ┃ ┃ ┣ 📜auth.errors.ts
  ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂handlers
- ┃ ┃ ┣ 📂__tests__
+ ┃ ┃ ┣ 📜article.handler.ts
  ┃ ┃ ┣ 📜auth.handler.ts
  ┃ ┃ ┣ 📜index.ts
- ┃ ┃ ┗ 📜users.handler.ts
+ ┃ ┃ ┗ 📜user.handler.ts
  ┃ ┣ 📂helpers
  ┃ ┣ 📂hooks
- ┃ ┃ ┣ 📂__tests__
  ┃ ┃ ┣ 📜auth.hook.ts
- ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┣ 📜index.ts
+ ┃ ┃ ┗ 📜protectedRoutes.hook.ts
  ┃ ┣ 📂interfaces
  ┃ ┃ ┗ 📂types
  ┃ ┃ ┃ ┣ 📂handlers
- ┃ ┃ ┃ ┃ ┗ 📜auth.types.handler.ts
+ ┃ ┃ ┃ ┃ ┣ 📜article.handler.types.ts
+ ┃ ┃ ┃ ┃ ┗ 📜auth.handler.types.ts
  ┃ ┃ ┃ ┣ 📂hooks
- ┃ ┃ ┃ ┃ ┗ 📜auth.types.hook.ts
+ ┃ ┃ ┃ ┃ ┗ 📜auth.hook.types.ts
  ┃ ┃ ┃ ┗ 📂models
- ┃ ┃ ┃ ┃ ┗ 📜Users.types.model.ts
+ ┃ ┃ ┃ ┃ ┣ 📜article.model.types.ts
+ ┃ ┃ ┃ ┃ ┗ 📜user.model.types.ts
  ┃ ┣ 📂models
+ ┃ ┃ ┣ 📜article.model.ts
  ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┗ 📜users.model.ts
- ┃ ┣ 📂public
  ┃ ┣ 📂redis
  ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┗ 📜redisClient.ts
  ┃ ┣ 📂routes
+ ┃ ┃ ┣ 📂swagger-schema
+ ┃ ┃ ┃ ┣ 📜article.route.schema.ts
+ ┃ ┃ ┃ ┣ 📜auth.route.schema.ts
+ ┃ ┃ ┃ ┗ 📜users.route.schema.ts
+ ┃ ┃ ┣ 📜article.route.ts
  ┃ ┃ ┣ 📜auth.route.ts
  ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┗ 📜users.route.ts
  ┃ ┣ 📂services
- ┃ ┃ ┣ 📂__tests__
+ ┃ ┃ ┣ 📜article.service.ts
  ┃ ┃ ┣ 📜index.ts
- ┃ ┃ ┗ 📜users.service.ts
+ ┃ ┃ ┗ 📜user.service.ts
  ┃ ┣ 📂utils
  ┃ ┃ ┣ 📜custom-error.ts
  ┃ ┃ ┗ 📜logger.ts
@@ -100,11 +109,12 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
 ### Built With
 
 * [NodeJs](https://nodejs.org/)
-* [MongoDB](https://www.mongodb.com/)
+* [Sequelize](https://sequelize.org/)
+* [Posgres](https://www.postgresql.org/)
 * [Fastify](https://www.fastify.io/)
 * [Jest](https://jestjs.io/)
 * [Swagger](https://swagger.io/)
-* [redis](https://redis.io/)
+* [Redis](https://redis.io/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -138,8 +148,6 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
 
 ### Installation
 
-
-
 1. Clone the repo
    ```sh
    git clone https://github.com/billowdev/nodejs-app-structure-init.git
@@ -149,12 +157,28 @@ App starter REST API With Node.js Fastify MongoDB - Typescript
    npm install
    ```
 3. Enter your ENV in `.env`
-   ```
-    PORT=
-	MONGO_URI=
-	JWT_SECRET=
-	NODE_ENV=
-   ```
+```
+  PORT=5000 | Your port
+  JWT_SECRET=YourJWTSecret
+  NODE_ENV=development
+  CLIENT_URL=localhost
+
+  REDIS_HOST=localhost
+  REDIS_PORT=6379
+  REDIS_USERNAME=default
+  REDIS_PASSWORD=REDISPASSWORD
+  REDIS_DATABASE=0
+  REDIS_BIND=0.0.0.0
+
+  DB_USERNAME= Your username for database
+  DB_PASSWORD= Your password for database
+  DB_DATABASE_DEVELOPMENT= database name for development
+  DB_DATABASE_PRODUCTION= database name for production
+  DB_DATABASE_TEST= database name for test
+  DB_HOST=localhost | your host
+  DB_DIALECT=postgres | mysql | your dialect
+
+```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

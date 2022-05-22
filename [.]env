@@ -10,10 +10,11 @@ REDIS_PASSWORD=REDISPASSWORD
 REDIS_DATABASE=0
 REDIS_BIND=0.0.0.0
 
-DB_USERNAME=
-DB_PASSWORD=
-DB_DATABASE_DEVELOPMENT=
-DB_DATABASE_PRODUCTION=
-DB_DATABASE_TEST=
-DB_HOST=localhost
-DB_DIALECT=postgres
+DB_USERNAME= Your username for database
+DB_PASSWORD= Your password for database
+DB_DATABASE_DEVELOPMENT= node_fastify_db_development | database name for development
+DB_DATABASE_PRODUCTION= node_fastify_db_production| database name for production
+DB_DATABASE_TEST= node_fastify_db_test | database name for test
+DB_HOST=localhost | your host
+DB_DIALECT=postgres | mysql | your dialect
+

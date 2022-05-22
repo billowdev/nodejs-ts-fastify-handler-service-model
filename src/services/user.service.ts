@@ -7,6 +7,7 @@ import config from "../config/config";
 import { IAuthLoginBodyResponse } from "../interfaces/types/handlers/auth.handler.types";
 import { getChache, setCache } from "../redis";
 import db from "../models";
+import logger from "../utils/logger";
 
 const passwordHashing = (password: string): string => {
   const salt = bcrypt.genSaltSync(10);
