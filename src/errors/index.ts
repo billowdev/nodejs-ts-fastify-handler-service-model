@@ -1,3 +1,3 @@
-import authErrors from "./auth.error";
-
-export { authErrors };
+import authErrors from "./auth.errors";
+import articleErrors from "./article.errors";
+export { authErrors, articleErrors };

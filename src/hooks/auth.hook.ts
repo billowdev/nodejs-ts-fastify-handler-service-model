@@ -2,7 +2,7 @@ import { FastifyRequest } from "fastify";
 import { verify } from "jsonwebtoken";
 import customError from "../utils/custom-error";
 import config from "../config/config";
-import { TokenDecoded } from "../interfaces/types/hooks/auth.types.hook";
+import { ITokenDecoded } from "../interfaces/types/hooks/auth.hook.types";
 import { authErrors } from "../errors";
 
 export const validateHeadersAuth = (req: FastifyRequest): string => {
@@ -17,13 +17,15 @@ export const validateHeadersAuth = (req: FastifyRequest): string => {
   return accessToken;
 };
 
-export const verifyToken = async (req: FastifyRequest): Promise<boolean> => {
+export const verifyToken = async (
+  request: FastifyRequest
+): Promise<boolean> => {
   try {
-    const token = validateHeadersAuth(req);
-    const decoded: TokenDecoded = Object(
+    const token = validateHeadersAuth(request);
+    const decoded: ITokenDecoded = Object(
       verify(token, config.webtoken as string)
     );
-    req.userId = decoded.aud;
+    request.UserId = decoded.aud;
     return true;
   } catch (err) {
     customError(authErrors.AuthJWTError);

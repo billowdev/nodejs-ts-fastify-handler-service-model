@@ -1,50 +1,45 @@
 import { FastifyRequest } from "fastify";
-import { usersService } from "../services";
-import { UserSchemaWithDocument } from "../models/users.model";
+import { userService } from "../services";
 import {
-  AuthLoginBodyRequest,
-  AuthRefreshTokenResponse,
-  AuthRegisterBodyRequest,
-} from "../interfaces/types/handlers/auth.types.handler";
+  IAuthLoginBodyRequest,
+  IAuthRefreshTokenResponse,
+  IAuthRegisterBodyRequest,
+} from "../interfaces/types/handlers/auth.handler.types";
 import { authErrors } from "../errors";
 import customError from "../utils/custom-error";
+import { IUserAttributes } from "../interfaces/types/models/user.model.types";
 
-export const handleLogin = async (req: AuthLoginBodyRequest) => {
-  const { email, password } = req.body;
-  const login = await usersService.userLogin(email, password);
+export const handleLogin = async (request: IAuthLoginBodyRequest) => {
+  const { email, password } = request.body;
+  const login = await userService.userLogin(email, password);
   return login;
 };
 
 export const handleRegister = async (
-  req: AuthRegisterBodyRequest
-): Promise<UserSchemaWithDocument> => {
-  const { email, password, name, surname } = req.body;
-  const user = await usersService
+  request: IAuthRegisterBodyRequest
+): Promise<IUserAttributes> => {
+  const { email, password, name, surname, phone } = request.body;
+  const user: IUserAttributes = await userService
     .createUser({
       email,
       password,
       name,
       surname,
+      phone,
     })
     .catch((err) => {
-      const error: object = err.keyPattern;
-      if (Object.entries(error)[0][0] === "email") {
-        customError(authErrors.AuthRegisterFailureDuplicateValue);
-      } else {
-        customError(authErrors.AuthRegisterFailure);
-      }
+      customError(authErrors.AuthRegisterFailure);
       throw new Error();
     });
-
   return user;
 };
 
 export const handleRefreshToken = async (
-  req: FastifyRequest
-): Promise<AuthRefreshTokenResponse> => {
-  const { userId } = req;
-  const accessToken = usersService.createToken(userId!);
-  const response: AuthRefreshTokenResponse = {
+  request: FastifyRequest
+): Promise<IAuthRefreshTokenResponse> => {
+  const { UserId } = request;
+  const accessToken = userService.createToken(UserId!);
+  const response: IAuthRefreshTokenResponse = {
     accessToken,
   };
   return response;
