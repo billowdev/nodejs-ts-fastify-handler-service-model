@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-app-structure-init",
+  "name": "nodejs-app-structure-template",
   "version": "1.0.0",
   "description": "app starter rest api with node-fastify-sequelize-postgresql-redis",
   "main": "index.js",
@@ -44,12 +44,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/billowdev/nodejs-app-structure-init.git"
+    "url": "git+https://github.com/billowdev/nodejs-app-structure-template.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/billowdev/nodejs-app-structure-init/issues"
+    "url": "https://github.com/billowdev/nodejs-app-structure-template/issues"
   },
-  "homepage": "https://github.com/billowdev/nodejs-app-structure-init#readme"
+  "homepage": "https://github.com/billowdev/nodejs-app-structure-template#readme"
 }
