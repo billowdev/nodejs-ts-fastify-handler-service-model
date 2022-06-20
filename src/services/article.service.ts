@@ -4,7 +4,7 @@ import customError from "../utils/custom-error";
 import articleErrors from "../errors/article.errors";
 import { delCache, getChache, setCache } from "../redis";
 import { IArticleBodyResponse } from "../interfaces/types/handlers/article.handler.types";
-import logger from "../utils/logger";
+// import logger from "../utils/logger";
 
 
 export const createArticle = async (
@@ -14,15 +14,16 @@ export const createArticle = async (
   return response;
 };
 
-const getArticleCacheKey = "services:getArticleById";
+// const getArticleCacheKey = "services:getArticleById";
+
 export const getArticleById = async (
   id: string
 ): Promise<IArticleBodyResponse> => {
 
-  const articleCache: any | IArticleBodyResponse = await getChache(getArticleCacheKey);
-  if (articleCache) {
-    return articleCache;
-  }
+  // const articleCache: any | IArticleBodyResponse = await getChache(getArticleCacheKey);
+  // if (articleCache) {
+  //   return articleCache;
+  // }
   const article: IArticleBodyResponse = await db.Article.findOne({
     where: { id },
   });
@@ -30,7 +31,7 @@ export const getArticleById = async (
   if (article == null) {
     customError(articleErrors.ArticleGetFailure);
   }
-  setCache(getArticleCacheKey, article);
+  // setCache(getArticleCacheKey, article);
   return article;
 };
 
@@ -52,7 +53,7 @@ export const updateArticle = async (
     customError(articleErrors.ArticleUpdateFailure);
   });
   // delete cache
-  delCache(getArticleCacheKey)
+  // delCache(getArticleCacheKey)
   return response;
 };
 

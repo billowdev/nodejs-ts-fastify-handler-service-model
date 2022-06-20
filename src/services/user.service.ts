@@ -5,9 +5,8 @@ import customError from "../utils/custom-error";
 import { authErrors } from "../errors";
 import config from "../config/config";
 import { IAuthLoginBodyResponse } from "../interfaces/types/handlers/auth.handler.types";
-import { getChache, setCache } from "../redis";
+// import { getChache, setCache } from "../redis";
 import db from "../models";
-import logger from "../utils/logger";
 
 const passwordHashing = (password: string): string => {
   const salt = bcrypt.genSaltSync(10);
@@ -84,17 +83,17 @@ export const userLogin = async (
 export const getUserById = async (
   UserId: string
 ): Promise<IAuthLoginBodyResponse> => {
-  const redisCacheKey: string = "services:getUserById";
-  const userCache: any = await getChache(redisCacheKey);
-  if (userCache) {
-    return userCache;
-  }
+  // const redisCacheKey: string = "services:getUserById";
+  // const userCache: any = await getChache(redisCacheKey);
+  // if (userCache) {
+  //   return userCache;
+  // }
   const user = await db.User.findOne({ where: { id: UserId } });
   if (user == null) {
     return customError(authErrors.AuthJWTError);
   }
   const response: IAuthLoginBodyResponse = mapUserResponseObject(UserId, user);
-  setCache(redisCacheKey, response);
+  // setCache(redisCacheKey, response);
   return response;
 };
 

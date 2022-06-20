@@ -8,6 +8,7 @@ import {
 import { authErrors } from "../errors";
 import customError from "../utils/custom-error";
 import { IUserAttributes } from "../interfaces/types/models/user.model.types";
+import db from "../models";
 
 export const handleLogin = async (request: IAuthLoginBodyRequest) => {
   const { email, password } = request.body;
@@ -45,8 +46,18 @@ export const handleRefreshToken = async (
   return response;
 };
 
+export const isAuthenticated = async (request: FastifyRequest) => {
+  const { UserId } = request;
+  const accessToken = userService.createToken(UserId!);
+  const { id, email, name, surname } = await db.User.findOne({ where: { id: UserId } });
+  const response = { id, email, name, surname, accessToken }
+  console.log(response)
+  return response
+}
+
 export default {
   handleLogin,
   handleRegister,
   handleRefreshToken,
+  isAuthenticated
 };
