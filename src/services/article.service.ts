@@ -41,12 +41,12 @@ export const updateArticle = async (
   text: string,
   type: string,
   UserId: string
-): Promise<IArticleBodyResponse> => {
+): Promise<Number[]> => {
   const isValid = await db.Article.findOne({ where: { id } });
   if (isValid == null) {
     customError(articleErrors.ArticleInvalid);
   }
-  const response: IArticleBodyResponse = await db.Article.update(
+  const response: Number[] = await db.Article.update(
     { id, title, text, type, UserId },
     { where: { id } }
   ).catch((error: Error) => {
@@ -60,8 +60,8 @@ export const updateArticle = async (
 export const deleteArticle = async (
   id: string,
   UserId: string
-): Promise<object> => {
-  const response: object = await db.Article.destroy({ where: { id, UserId } });
+): Promise<number> => {
+  const response: number = await db.Article.destroy({ where: { id, UserId } });
   return response;
 };
 

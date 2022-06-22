@@ -37,11 +37,12 @@ export const handleGetArticleById = async (
 
 export const handleUpdate = async (
   request: ArticleUpdateBodyRequest
-): Promise<object> => {
+): Promise<Number[]
+> => {
   const { title, text, type } = request.body;
   const id = request.params.id;
   const { UserId } = request;
-  const article: object = await articleService.updateArticle(
+  const article: Number[] = await articleService.updateArticle(
     id!,
     title!,
     text!,
@@ -53,10 +54,11 @@ export const handleUpdate = async (
 
 export const handleDelete = async (
   request: ArticleDeleteRequest
-): Promise<object> => {
+): Promise<number> => {
   const { UserId } = request;
   const id = request.params.id;
-  const article = await articleService.deleteArticle(id, UserId!);
+  console.log(id)
+  const article:number = await articleService.deleteArticle(id, UserId!);
   return article;
 };
 

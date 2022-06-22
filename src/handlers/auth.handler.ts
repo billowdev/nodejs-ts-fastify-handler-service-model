@@ -51,7 +51,6 @@ export const isAuthenticated = async (request: FastifyRequest) => {
   const accessToken = userService.createToken(UserId!);
   const { id, email, name, surname } = await db.User.findOne({ where: { id: UserId } });
   const response = { id, email, name, surname, accessToken }
-  console.log(response)
   return response
 }
 
