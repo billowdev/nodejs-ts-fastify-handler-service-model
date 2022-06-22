@@ -16,17 +16,25 @@ declare module "fastify" {
 const App = (options: FastifyServerOptions) => {
   const app = fastify(options);
   // use cors
+
   app.register(
     require("fastify-cors"),
     (instance) => (req: FastifyRequest, callback: any) => {
       let corsOptions;
-      // do not include CORS headers for requests from localhost
-      if (/localhost/.test(config.client!)) {
-        corsOptions = { origin: false };
-      } else {
-        corsOptions = { origin: true };
+
+      const client = config.client
+      if (client) {
+        if (/localhost/.test(client)) {
+          // dev should be true
+          corsOptions = { origin: true };
+          // do not include CORS headers for requests from localhost set origin: false
+          // corsOptions = { origin: false };
+        } else {
+          corsOptions = { origin: true };
+        }
+        callback(null, corsOptions); // callback expects two parameters: error and options
       }
-      callback(null, corsOptions); // callback expects two parameters: error and options
+
     }
   );
 

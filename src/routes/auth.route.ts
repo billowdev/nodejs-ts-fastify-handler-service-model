@@ -5,7 +5,9 @@ import { refreshTokenRouteSchema, loginRouteSchema, registerRouteSchema } from "
 
 const authRouter = async (app: FastifyInstance) => {
   app.post("/login", { schema: loginRouteSchema }, authHandler.handleLogin);
-  app.post("/register", { schema: registerRouteSchema }, authHandler.handleRegister);
+  app.post("/register", 
+  { schema: registerRouteSchema }, 
+  authHandler.handleRegister);
   app.get("/isauthenticated", 
   {
     preHandler: [verifyToken],
