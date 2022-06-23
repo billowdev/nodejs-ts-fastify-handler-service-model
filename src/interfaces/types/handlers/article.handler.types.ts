@@ -35,3 +35,15 @@ export type ArticleGetRequest = FastifyRequest<{
 export type ArticleDeleteRequest = FastifyRequest<{
   Params: { id: string };
 }>;
+
+
+export type IArticleAuthorResponse = IArticleAuthor[]
+
+export interface IArticleAuthor {
+  id: string
+  title: string
+  text: string
+  createdAt: string
+  updatedAt: string
+  UserId: string
+}

@@ -38,7 +38,38 @@ export const getArticleRouteSchema = {
 			}
 		}
 	},
-	
+
+}
+
+export const getArticleAuthorRouteSchema = {
+	tags: ["article"],
+	security: [{ apiKey: [] }],
+	response: {
+		200: {
+			"type": "array",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"title": {
+					"type": "string"
+				},
+				"text": {
+					"type": "string"
+				},
+				"createdAt": {
+					"type": "string"
+				},
+				"updatedAt": {
+					"type": "string"
+				},
+				"UserId": {
+					"type": "string"
+				}
+			}
+		}
+
+	},
 }
 
 export const createArticleRouteSchema = {
@@ -89,7 +120,7 @@ export const createArticleRouteSchema = {
 			}
 		}
 	},
-	
+
 }
 
 export const updateArticleRouteSchema = {
@@ -126,5 +157,6 @@ export default {
 	getArticleRouteSchema,
 	createArticleRouteSchema,
 	updateArticleRouteSchema,
-	deleteArticleRouteSchema
+	deleteArticleRouteSchema,
+	getArticleAuthorRouteSchema
 }

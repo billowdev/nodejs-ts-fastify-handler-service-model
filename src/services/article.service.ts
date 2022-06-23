@@ -3,7 +3,7 @@ import db from "../models";
 import customError from "../utils/custom-error";
 import articleErrors from "../errors/article.errors";
 import { delCache, getChache, setCache } from "../redis";
-import { IArticleBodyResponse } from "../interfaces/types/handlers/article.handler.types";
+import { IArticleAuthorResponse, IArticleBodyResponse } from "../interfaces/types/handlers/article.handler.types";
 // import logger from "../utils/logger";
 
 
@@ -65,9 +65,18 @@ export const deleteArticle = async (
   return response;
 };
 
+
+export const getArticleByAuthor = async (
+  UserId: string
+): Promise<IArticleAuthorResponse> => {
+  const response: IArticleAuthorResponse = await db.Article.findAll({ where: { UserId } });
+  return response
+}
+
 export default {
   createArticle,
   getArticleById,
   updateArticle,
   deleteArticle,
+  getArticleByAuthor
 };

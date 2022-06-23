@@ -3,6 +3,7 @@ import { articlesHandler } from "../handlers";
 import { protectedRoutes } from "../hooks";
 import {
   getArticleRouteSchema,
+  getArticleAuthorRouteSchema,
   createArticleRouteSchema,
   updateArticleRouteSchema,
   deleteArticleRouteSchema,
@@ -16,6 +17,13 @@ const articleRouter = async (app: FastifyInstance) => {
     { schema: getArticleRouteSchema },
     articlesHandler.handleGetArticleById
   );
+
+  app.get(
+    "/get/author",
+    { schema: getArticleAuthorRouteSchema },
+    articlesHandler.handleGetByAuthor
+  );
+
   app.post(
     "/create",
     { schema: createArticleRouteSchema },
@@ -35,6 +43,7 @@ const articleRouter = async (app: FastifyInstance) => {
   // routes want to protect
   const Routes: object = {
     "/api/articles/get": true,
+    "/api/articles/get/author": true,
     "/api/articles/create": true,
     "/api/articles/update/:id": true,
     "/api/articles/delete/:id": true,

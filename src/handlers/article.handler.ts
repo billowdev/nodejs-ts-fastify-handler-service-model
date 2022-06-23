@@ -6,10 +6,11 @@ import {
   ArticleUpdateBodyRequest,
   ArticleGetRequest,
   ArticleDeleteRequest,
+  IArticleAuthorResponse,
 } from "../interfaces/types/handlers/article.handler.types";
 import customError from "../utils/custom-error";
 import { IArticleAttributes } from "../interfaces/types/models/article.model.types";
-import { articleErrors } from "../errors";
+import { articleErrors, authErrors } from "../errors";
 import logger from "../utils/logger";
 
 export const handleCreate = async (
@@ -26,6 +27,12 @@ export const handleCreate = async (
     });
   return article;
 };
+
+export const handleGetByAuthor = async (request: FastifyRequest): Promise<IArticleAuthorResponse> => {
+  const { UserId } = request;
+  const response: IArticleAuthorResponse = await articleService.getArticleByAuthor(UserId!);
+  return response;
+}
 
 export const handleGetArticleById = async (
   request: ArticleGetRequest
@@ -58,7 +65,7 @@ export const handleDelete = async (
   const { UserId } = request;
   const id = request.params.id;
   console.log(id)
-  const article:number = await articleService.deleteArticle(id, UserId!);
+  const article: number = await articleService.deleteArticle(id, UserId!);
   return article;
 };
 
@@ -67,4 +74,5 @@ export default {
   handleGetArticleById,
   handleUpdate,
   handleDelete,
+  handleGetByAuthor
 };
