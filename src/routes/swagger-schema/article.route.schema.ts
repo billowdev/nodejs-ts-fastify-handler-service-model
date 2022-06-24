@@ -46,25 +46,30 @@ export const getArticleAuthorRouteSchema = {
 	security: [{ apiKey: [] }],
 	response: {
 		200: {
-			"type": "array",
-			"properties": {
-				"id": {
-					"type": "string"
-				},
-				"title": {
-					"type": "string"
-				},
-				"text": {
-					"type": "string"
-				},
-				"createdAt": {
-					"type": "string"
-				},
-				"updatedAt": {
-					"type": "string"
-				},
-				"UserId": {
-					"type": "string"
+			"data": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"title": {
+							"type": "string"
+						},
+						"text": {
+							"type": "string"
+						},
+						"createdAt": {
+							"type": "string"
+						},
+						"updatedAt": {
+							"type": "string"
+						},
+						"UserId": {
+							"type": "string"
+						}
+					}
 				}
 			}
 		}

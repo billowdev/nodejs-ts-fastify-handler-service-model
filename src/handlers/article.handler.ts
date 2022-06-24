@@ -28,9 +28,10 @@ export const handleCreate = async (
   return article;
 };
 
-export const handleGetByAuthor = async (request: FastifyRequest): Promise<IArticleAuthorResponse> => {
+export const handleGetByAuthor = async (request: FastifyRequest) => {
   const { UserId } = request;
-  const response: IArticleAuthorResponse = await articleService.getArticleByAuthor(UserId!);
+  const serviceResponse: IArticleAuthorResponse = await articleService.getArticleByAuthor(UserId!);
+  const response = { data: serviceResponse };
   return response;
 }
 

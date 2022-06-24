@@ -37,7 +37,9 @@ export type ArticleDeleteRequest = FastifyRequest<{
 }>;
 
 
-export type IArticleAuthorResponse = IArticleAuthor[]
+export interface IArticleAuthorResponse {
+  articleAuthor: IArticleAuthor[]
+}
 
 export interface IArticleAuthor {
   id: string
