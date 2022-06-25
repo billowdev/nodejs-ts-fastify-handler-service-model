@@ -7,6 +7,7 @@ import {
   createArticleRouteSchema,
   updateArticleRouteSchema,
   deleteArticleRouteSchema,
+  getAllArticleRouteSchema,
 } from "./swagger-schema/article.route.schema";
 
 const articleRouter = async (app: FastifyInstance) => {
@@ -14,7 +15,7 @@ const articleRouter = async (app: FastifyInstance) => {
 
   app.get(
     "/",
-    // { schema: getArticleListRouteSchema },
+    { schema: getAllArticleRouteSchema },
     articlesHandler.handleGetArticles
   );
 

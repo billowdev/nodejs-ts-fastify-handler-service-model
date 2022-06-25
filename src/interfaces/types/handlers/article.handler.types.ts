@@ -20,15 +20,6 @@ export type ArticleUpdateBodyRequest = FastifyRequest<{
   };
 }>;
 
-export interface IArticleBodyResponse {
-  id?: string;
-  title?: string;
-  text?: string;
-  UserId?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  data?: IArticleAttributes[]
-}
 
 export type ArticleGetRequest = FastifyRequest<{
   Querystring: { id: string };
@@ -39,15 +30,19 @@ export type ArticleDeleteRequest = FastifyRequest<{
 }>;
 
 
-export interface IArticleAuthorResponse {
-  articleAuthor: IArticleAuthor[]
-}
 
-export interface IArticleAuthor {
+export interface IArticlesBodyResponse {
   id: string
   title: string
   text: string
   createdAt: string
   updatedAt: string
   UserId: string
+  User?: IArticleAuthor
+}
+
+export interface IArticleAuthor {
+  id: string
+  name: string
+  surname: string
 }

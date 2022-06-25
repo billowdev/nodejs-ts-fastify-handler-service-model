@@ -3,12 +3,12 @@ import db from "../models";
 import customError from "../utils/custom-error";
 import articleErrors from "../errors/article.errors";
 // import { delCache, getChache, setCache } from "../redis";
-import { IArticleAuthorResponse, IArticleBodyResponse } from "../interfaces/types/handlers/article.handler.types";
+import {  IArticlesBodyResponse } from "../interfaces/types/handlers/article.handler.types";
 
 export const createArticle = async (
   data: IArticleAttributes
-): Promise<IArticleBodyResponse> => {
-  const response: IArticleBodyResponse = await db.Article.create(data);
+): Promise<IArticleAttributes> => {
+  const response: IArticleAttributes = await db.Article.create(data);
   return response;
 };
 
@@ -16,13 +16,13 @@ export const createArticle = async (
 
 export const fetchArticleById = async (
   id: string
-): Promise<IArticleBodyResponse> => {
+): Promise<IArticleAttributes> => {
 
   // const articleCache: any | IArticleBodyResponse = await getChache(getArticleCacheKey);
   // if (articleCache) {
   //   return articleCache;
   // }
-  const article: IArticleBodyResponse = await db.Article.findOne({
+  const article: IArticleAttributes = await db.Article.findOne({
     where: { id },
   });
 
@@ -66,16 +66,26 @@ export const deleteArticle = async (
 
 export const fetchArticleByAuthor = async (
   UserId: string
-): Promise<IArticleAuthorResponse> => {
-  const response: IArticleAuthorResponse = await db.Article.findAll({ where: { UserId } });
+): Promise<IArticlesBodyResponse> => {
+  const response: IArticlesBodyResponse = await db.Article.findAll({ where: { UserId } });
   return response
 }
 
 export const fetchArticles = async (
 
-): Promise<IArticleBodyResponse> => {
-  const data = await db.Article.findAll()
-  const response: IArticleBodyResponse = { data: data }
+) => {
+  const data = await db.Article.findAll({
+    include:[
+      {
+        model:db.User, 
+        attributes:[
+          'id', 'name', 'surname'
+        ]
+      }
+    ]
+  })
+  
+  const response = { data: data }
   return response
 }
 

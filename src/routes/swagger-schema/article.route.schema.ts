@@ -68,7 +68,55 @@ export const getArticleListRouteSchema = {
 						},
 						"UserId": {
 							"type": "string"
-						}
+						},
+					}
+				}
+			}
+		}
+
+	},
+}
+
+
+export const getAllArticleRouteSchema = {
+	tags: ["article"],
+	security: [{ apiKey: [] }],
+	response: {
+		200: {
+			"data": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"title": {
+							"type": "string"
+						},
+						"text": {
+							"type": "string"
+						},
+						"createdAt": {
+							"type": "string"
+						},
+						"updatedAt": {
+							"type": "string"
+						},
+						"User": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"surname": {
+									"type": "string"
+								},						
+							}
+						},
 					}
 				}
 			}
@@ -128,6 +176,7 @@ export const createArticleRouteSchema = {
 
 }
 
+
 export const updateArticleRouteSchema = {
 	tags: ["article"],
 	security: [{ apiKey: [] }],
@@ -165,5 +214,6 @@ export default {
 	createArticleRouteSchema,
 	updateArticleRouteSchema,
 	deleteArticleRouteSchema,
-	getArticleListRouteSchema
+	getArticleListRouteSchema,
+	getAllArticleRouteSchema
 }

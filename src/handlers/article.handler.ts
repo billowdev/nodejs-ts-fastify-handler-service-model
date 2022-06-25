@@ -2,11 +2,10 @@ import { FastifyRequest } from "fastify";
 import { articleService } from "../services";
 import {
   ArticleCreateBodyRequest,
-  IArticleBodyResponse,
   ArticleUpdateBodyRequest,
   ArticleGetRequest,
   ArticleDeleteRequest,
-  IArticleAuthorResponse,
+  IArticlesBodyResponse,
 } from "../interfaces/types/handlers/article.handler.types";
 import customError from "../utils/custom-error";
 import { IArticleAttributes } from "../interfaces/types/models/article.model.types";
@@ -15,10 +14,10 @@ import logger from "../utils/logger";
 
 export const handleCreate = async (
   request: ArticleCreateBodyRequest
-): Promise<IArticleBodyResponse> => {
+): Promise<IArticleAttributes> => {
   const { UserId } = request;
   const { title, text, type } = request.body;
-  const article: IArticleBodyResponse = await articleService
+  const article: IArticleAttributes = await articleService
     .createArticle({ title, text, type, UserId })
     .catch((err) => {
       logger.error(["- DEBUG ERROR ON article -", err, "- DEBUG -"]);
@@ -28,16 +27,16 @@ export const handleCreate = async (
   return article;
 };
 
-export const handleGetArticles = async (): Promise<IArticleBodyResponse> => {
-  const response: IArticleBodyResponse = await articleService.fetchArticles()
+export const handleGetArticles = async () => {
+  const response = await articleService.fetchArticles()
   return response
 }
 
 export const handleGetByAuthor = async (request: FastifyRequest) => {
   const { UserId } = request;
   if (UserId) {
-    const serviceResponse: IArticleAuthorResponse = await articleService.fetchArticleByAuthor(UserId);
-    const response = { data: serviceResponse };
+    const data: IArticlesBodyResponse = await articleService.fetchArticleByAuthor(UserId);
+    const response = { data: data };
     return response;
   }
 }
