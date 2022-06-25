@@ -41,7 +41,7 @@ export const getArticleRouteSchema = {
 
 }
 
-export const getArticleAuthorRouteSchema = {
+export const getArticleListRouteSchema = {
 	tags: ["article"],
 	security: [{ apiKey: [] }],
 	response: {
@@ -142,6 +142,7 @@ export const updateArticleRouteSchema = {
 		required: ['id']
 	},
 }
+
 export const deleteArticleRouteSchema = {
 	tags: ["article"],
 	security: [{ apiKey: [] }],
@@ -158,10 +159,11 @@ export const deleteArticleRouteSchema = {
 }
 
 
+
 export default {
 	getArticleRouteSchema,
 	createArticleRouteSchema,
 	updateArticleRouteSchema,
 	deleteArticleRouteSchema,
-	getArticleAuthorRouteSchema
+	getArticleListRouteSchema
 }

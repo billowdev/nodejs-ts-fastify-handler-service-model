@@ -1,4 +1,5 @@
 import { FastifyRequest } from "fastify";
+import { IArticleAttributes } from "../models/article.model.types";
 
 export type ArticleCreateBodyRequest = FastifyRequest<{
   Body: {
@@ -26,6 +27,7 @@ export interface IArticleBodyResponse {
   UserId?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  data?: IArticleAttributes[]
 }
 
 export type ArticleGetRequest = FastifyRequest<{

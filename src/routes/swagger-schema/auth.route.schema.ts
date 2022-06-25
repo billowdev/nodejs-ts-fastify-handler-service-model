@@ -113,9 +113,48 @@ export const refreshTokenRouteSchema = {
 	},
 }
 
+export const isAuthenticatedRouteSchema = {
+	tags: ["auth"],
+	security: [{ apiKey: [] }],
+	response: {
+		200: {
+			type: 'object',
+			properties: {
+				id: {
+					type: 'string',
+					format: 'id'
+				},
+				email: {
+					type: 'string',
+					format: 'email',
+				},
+				name: {
+					type: 'string',
+					format: 'string',
+				},
+				phone: {
+					type: 'string',
+					format: 'string',
+				},
+				surname: {
+					type: 'string',
+					format: 'id',
+				},
+				accessToken: {
+					type: 'string',
+					format: 'jwt',
+				}
+			}
+		}
+	},
+}
+
+
 
 
 export default {
 	refreshTokenRouteSchema,
-	loginRouteSchema
+	loginRouteSchema,
+	isAuthenticatedRouteSchema,
+	registerRouteSchema
 }

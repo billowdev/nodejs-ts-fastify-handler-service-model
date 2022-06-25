@@ -2,10 +2,8 @@ import { IArticleAttributes } from "../interfaces/types/models/article.model.typ
 import db from "../models";
 import customError from "../utils/custom-error";
 import articleErrors from "../errors/article.errors";
-import { delCache, getChache, setCache } from "../redis";
+// import { delCache, getChache, setCache } from "../redis";
 import { IArticleAuthorResponse, IArticleBodyResponse } from "../interfaces/types/handlers/article.handler.types";
-// import logger from "../utils/logger";
-
 
 export const createArticle = async (
   data: IArticleAttributes
@@ -16,7 +14,7 @@ export const createArticle = async (
 
 // const getArticleCacheKey = "services:getArticleById";
 
-export const getArticleById = async (
+export const fetchArticleById = async (
   id: string
 ): Promise<IArticleBodyResponse> => {
 
@@ -66,17 +64,26 @@ export const deleteArticle = async (
 };
 
 
-export const getArticleByAuthor = async (
+export const fetchArticleByAuthor = async (
   UserId: string
 ): Promise<IArticleAuthorResponse> => {
   const response: IArticleAuthorResponse = await db.Article.findAll({ where: { UserId } });
   return response
 }
 
+export const fetchArticles = async (
+
+): Promise<IArticleBodyResponse> => {
+  const data = await db.Article.findAll()
+  const response: IArticleBodyResponse = { data: data }
+  return response
+}
+
 export default {
   createArticle,
-  getArticleById,
+  fetchArticleById,
   updateArticle,
   deleteArticle,
-  getArticleByAuthor
+  fetchArticleByAuthor,
+  fetchArticles
 };

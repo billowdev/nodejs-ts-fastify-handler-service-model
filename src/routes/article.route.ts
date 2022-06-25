@@ -3,7 +3,7 @@ import { articlesHandler } from "../handlers";
 import { protectedRoutes } from "../hooks";
 import {
   getArticleRouteSchema,
-  getArticleAuthorRouteSchema,
+  getArticleListRouteSchema,
   createArticleRouteSchema,
   updateArticleRouteSchema,
   deleteArticleRouteSchema,
@@ -11,7 +11,13 @@ import {
 
 const articleRouter = async (app: FastifyInstance) => {
   // route api app.method("path", {option}, handler)
-  // get route should be params... but in this example i create with query
+
+  app.get(
+    "/",
+    // { schema: getArticleListRouteSchema },
+    articlesHandler.handleGetArticles
+  );
+
   app.get(
     "/get",
     { schema: getArticleRouteSchema },
@@ -20,7 +26,7 @@ const articleRouter = async (app: FastifyInstance) => {
 
   app.get(
     "/get/author",
-    { schema: getArticleAuthorRouteSchema },
+    { schema: getArticleListRouteSchema },
     articlesHandler.handleGetByAuthor
   );
 
@@ -42,7 +48,8 @@ const articleRouter = async (app: FastifyInstance) => {
 
   // routes want to protect
   const Routes: object = {
-    "/api/articles/get": true,
+    "/api/articles/get": false,
+    "/api/articles": false,
     "/api/articles/get/author": true,
     "/api/articles/create": true,
     "/api/articles/update/:id": true,

@@ -28,25 +28,31 @@ export const handleCreate = async (
   return article;
 };
 
+export const handleGetArticles = async (): Promise<IArticleBodyResponse> => {
+  const response: IArticleBodyResponse = await articleService.fetchArticles()
+  return response
+}
+
 export const handleGetByAuthor = async (request: FastifyRequest) => {
   const { UserId } = request;
-  const serviceResponse: IArticleAuthorResponse = await articleService.getArticleByAuthor(UserId!);
-  const response = { data: serviceResponse };
-  return response;
+  if (UserId) {
+    const serviceResponse: IArticleAuthorResponse = await articleService.fetchArticleByAuthor(UserId);
+    const response = { data: serviceResponse };
+    return response;
+  }
 }
 
 export const handleGetArticleById = async (
   request: ArticleGetRequest
 ): Promise<IArticleAttributes> => {
   const id = request.query.id;
-  const article: IArticleAttributes = await articleService.getArticleById(id!);
+  const article: IArticleAttributes = await articleService.fetchArticleById(id);
   return article;
 };
 
 export const handleUpdate = async (
   request: ArticleUpdateBodyRequest
-): Promise<Number[]
-> => {
+): Promise<Number[]> => {
   const { title, text, type } = request.body;
   const id = request.params.id;
   const { UserId } = request;
@@ -75,5 +81,6 @@ export default {
   handleGetArticleById,
   handleUpdate,
   handleDelete,
-  handleGetByAuthor
+  handleGetByAuthor,
+  handleGetArticles
 };
