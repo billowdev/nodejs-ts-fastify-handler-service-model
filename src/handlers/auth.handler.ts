@@ -2,13 +2,11 @@ import { FastifyRequest } from "fastify";
 import { userService } from "../services";
 import {
   IAuthLoginBodyRequest,
-  IAuthRefreshTokenResponse,
   IAuthRegisterBodyRequest,
 } from "../interfaces/types/handlers/auth.handler.types";
 import { authErrors } from "../errors";
 import customError from "../utils/custom-error";
 import { IUserAttributes } from "../interfaces/types/models/user.model.types";
-import db from "../models";
 
 export const handleLogin = async (request: IAuthLoginBodyRequest) => {
   const { email, password } = request.body;
@@ -35,28 +33,20 @@ export const handleRegister = async (
   return user;
 };
 
-export const handleRefreshToken = async (
-  request: FastifyRequest
-): Promise<IAuthRefreshTokenResponse> => {
-  const { UserId } = request;
-  const accessToken = userService.createToken(UserId!);
-  const response: IAuthRefreshTokenResponse = {
-    accessToken,
-  };
-  return response;
-};
 
 export const isAuthenticated = async (request: FastifyRequest) => {
   const { UserId } = request;
-  const accessToken = userService.createToken(UserId!);
-  const { id, email, name, surname } = await db.User.findOne({ where: { id: UserId } });
-  const response = { id, email, name, surname, accessToken }
+  const response = userService.userSession(UserId!);
   return response
+}
+
+export const loggedOut = async (request: FastifyRequest) => {
+  return request.UserId
 }
 
 export default {
   handleLogin,
   handleRegister,
-  handleRefreshToken,
-  isAuthenticated
+  isAuthenticated,
+  loggedOut
 };

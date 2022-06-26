@@ -3,7 +3,7 @@ import db from "../models";
 import customError from "../utils/custom-error";
 import articleErrors from "../errors/article.errors";
 // import { delCache, getChache, setCache } from "../redis";
-import {  IArticlesBodyResponse } from "../interfaces/types/handlers/article.handler.types";
+import { IArticlesBodyResponse } from "../interfaces/types/handlers/article.handler.types";
 
 export const createArticle = async (
   data: IArticleAttributes
@@ -75,16 +75,16 @@ export const fetchArticles = async (
 
 ) => {
   const data = await db.Article.findAll({
-    include:[
+    include: [
       {
-        model:db.User, 
-        attributes:[
+        model: db.User,
+        attributes: [
           'id', 'name', 'surname'
         ]
       }
     ]
   })
-  
+
   const response = { data: data }
   return response
 }

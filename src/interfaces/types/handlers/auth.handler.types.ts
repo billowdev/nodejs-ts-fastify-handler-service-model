@@ -25,7 +25,3 @@ export interface IAuthLoginBodyResponse {
   phone: string;
   accessToken?: string;
 }
-
-export interface IAuthRefreshTokenResponse {
-  accessToken: string;
-}

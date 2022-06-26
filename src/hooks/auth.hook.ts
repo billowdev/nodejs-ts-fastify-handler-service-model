@@ -25,6 +25,7 @@ export const verifyToken = async (
     const decoded: ITokenDecoded = Object(
       verify(token, config.webtoken as string)
     );
+
     request.UserId = decoded.aud;
     return true;
   } catch (err) {

@@ -22,10 +22,10 @@ const comparePassword = (password: string, existsPassword: string): boolean => {
   return true;
 };
 
-const createToken = (userId: string): string => {
+const createToken = (UserId: string): string => {
   const token = sign({}, config.webtoken as string, {
     expiresIn: 3600 * 30,
-    audience: String(userId),
+    audience: String(UserId),
   });
   return token;
 };
@@ -80,6 +80,30 @@ export const userLogin = async (
   return response;
 };
 
+export const userSession = async (
+  id: string,
+): Promise<IAuthLoginBodyResponse> => {
+  const user = await db.User.findOne({
+    where: { id },
+  });
+  if (user == null) {
+    customError({
+      ...authErrors.AuthJWTError,
+      data: {
+        success: false,
+      },
+    });
+  }
+  const UserId: string = id;
+  const accessToken = createToken(UserId);
+  const response: IAuthLoginBodyResponse = mapUserResponseObject(
+    UserId,
+    user,
+    accessToken
+  );
+  return response;
+};
+
 export const getUserById = async (
   UserId: string
 ): Promise<IAuthLoginBodyResponse> => {
@@ -102,4 +126,5 @@ export default {
   userLogin,
   getUserById,
   createToken,
+  userSession
 };

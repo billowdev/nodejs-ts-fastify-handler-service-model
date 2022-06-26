@@ -97,21 +97,6 @@ export const registerRouteSchema = {
 	},
 }
 
-export const refreshTokenRouteSchema = {
-	tags: ["auth"],
-	security: [{ apiKey: [] }],
-	response: {
-		200: {
-			type: 'object',
-			properties: {
-				accessToken: {
-					type: 'string',
-					format: 'jwt'
-				}
-			}
-		}
-	},
-}
 
 export const isAuthenticatedRouteSchema = {
 	tags: ["auth"],
@@ -153,7 +138,6 @@ export const isAuthenticatedRouteSchema = {
 
 
 export default {
-	refreshTokenRouteSchema,
 	loginRouteSchema,
 	isAuthenticatedRouteSchema,
 	registerRouteSchema
