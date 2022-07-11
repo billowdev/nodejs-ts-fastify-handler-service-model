@@ -26,7 +26,11 @@ const App = (options: FastifyServerOptions) => {
       if (client) {
         if (/localhost/.test(client)) {
           // dev should be true
-          corsOptions = { origin: true };
+          if (config.env === "development") {
+            corsOptions = { origin: true };
+          } else {
+            corsOptions = { origin: false };
+          }
           // do not include CORS headers for requests from localhost set origin: false
           // corsOptions = { origin: false };
         } else {
